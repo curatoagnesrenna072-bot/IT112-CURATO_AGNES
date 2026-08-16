@@ -1,0 +1,12 @@
+#include <stdio.h>
+int main(){
+    printf("*************************************\n");
+    printf("*                                   *\n");
+    printf("*         [ SYSTEM: READY ]         *\n");
+    printf("*                                   *\n");
+    printf("* WELCOME TO COMPUTER PROGRAMMING 1 *\n");
+    printf("*                                   *\n");
+    printf("*      CODE TODAY, SLEEP LATER      *\n");
+    printf("*                                   *\n");
+    printf("*************************************\n");
+    return 0;}

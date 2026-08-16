@@ -6,7 +6,7 @@ int main(){
     printf("*                                   *\n");
     printf("* WELCOME TO COMPUTER PROGRAMMING 1 *\n");
     printf("*                                   *\n");
-    printf("*      CODE TODAY, SLEEP LATER      *\n");
+    printf("*      CODE HARD, SLEEP HARDER      *\n");
     printf("*                                   *\n");
     printf("*************************************\n");
     return 0;}

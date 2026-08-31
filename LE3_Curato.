@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char name[100];
+    char section[50];
+    double num1, num2;
+
+    printf("Enter Complete Name: ");
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0';
+
+    printf("Enter Section: ");
+    fgets(section, sizeof(section), stdin);
+    section[strcspn(section, "\n")] = '\0';
+
+    printf("\nEnter first number: ");
+    scanf("%lf", &num1);
+
+    printf("Enter second number: ");
+    scanf("%lf", &num2);
+
+    printf("\n Student Calculator\n");
+    printf("Student name: %s\n", name);
+    printf("Section: %s\n", section);
+    printf(" Results:\n");
+    printf("%.0f + %.0f = %.0f\n", num1, num2, num1 + num2);
+    printf("%.0f - %.0f = %.0f\n", num1, num2, num1 - num2);
+    printf("%.0f * %.0f = %.0f\n", num1, num2, num1 * num2);
+    
+    // Division with zero check
+    if (num2 != 0) {
+        printf("%.0f / %.0f = %.2f\n", num1, num2, num1 / num2);
+    } else {
+        printf("%.0f / %.0f = Error! Cannot divide by zero\n", num1, num2);
+    }
+
+    return 0;
+}
+}

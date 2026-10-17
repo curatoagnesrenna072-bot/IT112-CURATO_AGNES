@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+int main() {
+    float balance = 500.00;
+    float amount;
+    int choice;
+
+    while (1) {
+        printf("\nBSIT BANK\n");
+        printf("Please Select your Transaction\n");
+        printf("[1] Balance Inquiry\n");
+        printf("[2] Deposit\n");
+        printf("[3] Withdraw\n");
+        printf("[4] Exit\n");
+        printf("Enter your choice: ");
+
+        if (scanf("%d", &choice) != 1) {
+            while (getchar() != '\n');
+            printf("Invalid input! Please enter a number from 1 to 4.\n");
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                printf("Your current balance: P%.2f\n", balance);
+                break;
+
+            case 2:
+                printf("Enter amount to deposit: ");
+                if (scanf("%f", &amount) != 1) {
+                    while (getchar() != '\n');
+                    printf("Invalid input!\n");
+                } else if (amount < 50) {
+                    printf("Deposit denied! Minimum deposit is P50.00.\n");
+                } else if (amount != (int)amount) {
+                    printf("Deposit denied! Coins are not allowed. Enter a whole peso amount.\n");
+                } else if ((int)amount % 50 != 0) {
+                    printf("Deposit denied! Amount must be in multiples of P50 (e.g. 50, 100, 150).\n");
+                } else {
+                    balance += amount;
+                    printf("P%.2f deposited successfully!\n", amount);
+                }
+                break;
+
+            case 3:
+                printf("Enter amount to withdraw: ");
+                if (scanf("%f", &amount) != 1) {
+                    while (getchar() != '\n');
+                    printf("Invalid input!\n");
+                } else if (amount < 50) {
+                    printf("Withdrawal denied! Minimum withdrawal is P50.00.\n");
+                } else if (amount != (int)amount) {
+                    printf("Withdrawal denied! Coins are not allowed. Enter a whole peso amount.\n");
+                } else if ((int)amount % 50 != 0) {
+                    printf("Withdrawal denied! Amount must be in multiples of P50 (e.g. 50, 100, 150).\n");
+                } else if (balance - amount < 100.00) {
+                    printf("Withdrawal denied! You must maintain at least P100.00 in your account.\n");
+                } else {
+                    balance -= amount;
+                    printf("You withdrew P%.2f successfully!\n", amount);
+                }
+                break;
+
+            case 4:
+                printf("Thank you for banking with BSIT BANK!\n");
+                return 0;
+
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+}

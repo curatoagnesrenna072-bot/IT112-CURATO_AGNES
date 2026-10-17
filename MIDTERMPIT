@@ -1,0 +1,184 @@
+#include <stdio.h>
+ 
+/* ---------- Constants ---------- */
+#define MAX_HOURS      24
+#define DAILY_MAX      250.00
+#define SENIOR_PWD_OFF 0.20
+ 
+/* ---------- Function prototypes ---------- */
+void   displayMenu(void);
+void   displayRates(void);
+double computeFee(int hours);
+double getDiscountRate(int customerType);
+void   processParking(void);
+ 
+int main(void)
+{
+    int choice;
+ 
+    do
+    {
+        displayMenu();
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+ 
+        switch (choice)
+        {
+            case 1:
+                processParking();
+                break;
+            case 2:
+                displayRates();
+                break;
+            case 3:
+                printf("\nThank you for using the Parking Fee Calculator!\n");
+                break;
+            default:
+                printf("\nInvalid choice. Please select 1-3.\n");
+        }
+    } while (choice != 3);
+ 
+    return 0;
+}
+ 
+/* Shows the main menu */
+void displayMenu(void)
+{
+    printf("\n===================================\n");
+    printf("     PARKING FEE CALCULATOR\n");
+    printf("===================================\n");
+    printf("[1] Compute Parking Fee\n");
+    printf("[2] View Rates\n");
+    printf("[3] Exit\n");
+    printf("-----------------------------------\n");
+}
+ 
+/* Prints the rate table, grouping hours that share the same fee */
+void displayRates(void)
+{
+    int    hours, start = 1;
+    double fee;
+ 
+    printf("\n-------- RATE TABLE --------\n");
+    printf("Maximum fee (24 hours): P%.2f\n", DAILY_MAX);
+    printf("Senior Citizen / PWD: %.0f%% off\n\n", SENIOR_PWD_OFF * 100);
+ 
+    printf("From  To    Fee\n");
+    for (hours = 1; hours <= MAX_HOURS; hours++)
+    {
+        fee = computeFee(hours);
+ 
+        /* Print one row when the next hour has a different fee */
+        if (hours == MAX_HOURS || fee != computeFee(hours + 1))
+        {
+            printf("%-6d%-6d P%.2f\n", start, hours, fee);
+            start = hours + 1;
+        }
+    }
+}
+ 
+/* Computes the fee before discount using the hour brackets */
+double computeFee(int hours)
+{
+    double fee;
+ 
+    if (hours <= 1)
+    {
+        fee = 15.00;
+    }
+    else if (hours <= 3)
+    {
+        fee = 40.00;
+    }
+    else if (hours <= 5)
+    {
+        fee = 70.00;
+    }
+    else if (hours <= 8 )
+    {
+        fee = 100.00;
+    }
+    else if (hours <= 10)
+    {
+        fee = 120.00;
+    }
+    else if (hours <= 12)
+    {
+        fee = 150.00;
+    }
+    else if (hours <= 15)
+    {
+        fee = 180.00;
+    }
+    else if (hours <= 18)
+    {
+        fee = 200.00;
+    }
+    else if (hours <= 20)
+    {
+        fee = 220.00;
+    }
+    else
+    {
+        fee = DAILY_MAX;
+    }
+ 
+    return fee;
+}
+ 
+/* Returns the discount rate based on customer type */
+double getDiscountRate(int customerType)
+{
+    double rate;
+ 
+    switch (customerType)
+    {
+        case 1:  rate = 0.00;           break;  /* Regular */
+        case 2:  rate = SENIOR_PWD_OFF; break;  /* Senior Citizen / PWD */
+        default: rate = 0.00;
+    }
+ 
+    return rate;
+}
+ 
+/* Handles input, computation, and the receipt */
+void processParking(void)
+{
+    int    hours, customerType;
+    double fee, discountRate, discountAmount, total;
+ 
+    /* Hours parked (validated with while) */
+    printf("\nHours parked (1-%d): ", MAX_HOURS);
+    scanf("%d", &hours);
+    while (hours < 1 || hours > MAX_HOURS)
+    {
+        printf("Invalid hours. Enter 1-%d: ", MAX_HOURS);
+        scanf("%d", &hours);
+    }
+ 
+    /* Customer type */
+    printf("\nCustomer Type:\n");
+    printf("[1] Regular\n");
+    printf("[2] Senior Citizen / PWD\n");
+    printf("Enter type: ");
+    scanf("%d", &customerType);
+ 
+    /* Arithmetic operations */
+    fee            = computeFee(hours);
+    discountRate   = getDiscountRate(customerType);
+    discountAmount = fee * discountRate;
+    total          = fee - discountAmount;
+ 
+    /* Receipt */
+    printf("\n========== PARKING RECEIPT ==========\n");
+    printf("Hours parked : %d\n", hours);
+    if (fee >= DAILY_MAX)
+    {
+        printf("Note         : Maximum fee applied\n");
+    }
+    printf("Parking fee  : P%.2f\n", fee);
+    printf("Discount     : -P%.2f\n", discountAmount);
+    printf("-------------------------------------\n");
+    printf("TOTAL        : P%.2f\n", total);
+    printf("=====================================\n");
+}
